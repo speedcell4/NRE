@@ -4,6 +4,7 @@
 #include "init.h"
 #include <algorithm>
 #include <map>
+#include <cassert>
 
 int tipp = 0;
 float ress = 0;
