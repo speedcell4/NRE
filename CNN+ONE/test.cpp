@@ -15,74 +15,71 @@
 #include "init.h"
 #include "test.h"
 
-void preprocess()
-{
+void preprocess() {
 
-	matrixRelation = (float *)calloc(dimensionC * relationTotal, sizeof(float));
-	matrixRelationPr = (float *)calloc(relationTotal, sizeof(float));
-	matrixRelationPrDao = (float *)calloc(relationTotal, sizeof(float));
-	wordVecDao = (float *)calloc(dimension * wordTotal, sizeof(float));
-	positionVecE1 = (float *)calloc(PositionTotalE1 * dimensionWPE, sizeof(float));
-	positionVecE2 = (float *)calloc(PositionTotalE2 * dimensionWPE, sizeof(float));
-	
-	matrixW1 = (float*)calloc(dimensionC * dimension * window, sizeof(float));
-	matrixW1PositionE1 = (float *)calloc(dimensionC * dimensionWPE * window, sizeof(float));
-	matrixW1PositionE2 = (float *)calloc(dimensionC * dimensionWPE * window, sizeof(float));
-	matrixB1 = (float*)calloc(dimensionC, sizeof(float));
+  matrixRelation = (float *) calloc(dimensionC * relationTotal, sizeof(float));
+  matrixRelationPr = (float *) calloc(relationTotal, sizeof(float));
+  matrixRelationPrDao = (float *) calloc(relationTotal, sizeof(float));
+  wordVecDao = (float *) calloc(dimension * wordTotal, sizeof(float));
+  positionVecE1 = (float *) calloc(PositionTotalE1 * dimensionWPE, sizeof(float));
+  positionVecE2 = (float *) calloc(PositionTotalE2 * dimensionWPE, sizeof(float));
 
-	version = "";
-	
-	FILE *fout = fopen(("./out/matrixW1+B1.txt"+version).c_str(), "r");
-	fscanf(fout,"%d%d%d%d", &dimensionC, &dimension, &window, &dimensionWPE);
-	for (int i = 0; i < dimensionC; i++) {
-		//cout<<i<<endl;
-		for (int j = 0; j < dimension * window; j++)
-			fscanf(fout, "%f", &matrixW1[i* dimension*window+j]);
-		for (int j = 0; j < dimensionWPE * window; j++)
-			fscanf(fout, "%f", &matrixW1PositionE1[i* dimensionWPE*window+j]);
-		for (int j = 0; j < dimensionWPE * window; j++)
-			fscanf(fout, "%f", &matrixW1PositionE2[i* dimensionWPE*window+j]);
-		fscanf(fout, "%f", &matrixB1[i]);
-	}
-	fclose(fout);
+  matrixW1 = (float *) calloc(dimensionC * dimension * window, sizeof(float));
+  matrixW1PositionE1 = (float *) calloc(dimensionC * dimensionWPE * window, sizeof(float));
+  matrixW1PositionE2 = (float *) calloc(dimensionC * dimensionWPE * window, sizeof(float));
+  matrixB1 = (float *) calloc(dimensionC, sizeof(float));
 
-	fout = fopen(("./out/matrixRl.txt"+version).c_str(), "r");
-	fscanf(fout,"%d%d", &relationTotal, &dimensionC);
-	for (int i = 0; i < relationTotal; i++) {
-		for (int j = 0; j < dimensionC; j++)
-			fscanf(fout, "%f", &matrixRelation[i * dimensionC + j]);
-	}
-	for (int i = 0; i < relationTotal; i++) 
-		fscanf(fout, "%f", &matrixRelationPr[i]);
-	fclose(fout);
+  version = "";
 
-	fout = fopen(("./out/matrixPosition.txt"+version).c_str(), "r");
-	fscanf(fout,"%d%d%d", &PositionTotalE1, &PositionTotalE2, &dimensionWPE);
-	for (int i = 0; i < PositionTotalE1; i++) {
-		for (int j = 0; j < dimensionWPE; j++)
-			fscanf(fout, "%f", &positionVecE1[i * dimensionWPE + j]);
-	}
-	for (int i = 0; i < PositionTotalE2; i++) {
-		for (int j = 0; j < dimensionWPE; j++)
-			fscanf(fout, "%f", &positionVecE2[i * dimensionWPE + j]);
-	}
-	fclose(fout);
-	cout<<71<<endl;
+  FILE *fout = fopen(("./out/matrixW1+B1.txt" + version).c_str(), "r");
+  fscanf(fout, "%d%d%d%d", &dimensionC, &dimension, &window, &dimensionWPE);
+  for (int i = 0; i < dimensionC; i++) {
+    //cout<<i<<endl;
+    for (int j = 0; j < dimension * window; j++)
+      fscanf(fout, "%f", &matrixW1[i * dimension * window + j]);
+    for (int j = 0; j < dimensionWPE * window; j++)
+      fscanf(fout, "%f", &matrixW1PositionE1[i * dimensionWPE * window + j]);
+    for (int j = 0; j < dimensionWPE * window; j++)
+      fscanf(fout, "%f", &matrixW1PositionE2[i * dimensionWPE * window + j]);
+    fscanf(fout, "%f", &matrixB1[i]);
+  }
+  fclose(fout);
 
-	fout = fopen(("./out/word2vec.txt"+version).c_str(), "r");
-	fscanf(fout,"%d%d",&wordTotal,&dimension);
-	for (int i = 0; i < wordTotal; i++)
-	{
-		for (int j=0; j<dimension; j++)
-			fscanf(fout,"%f", &wordVec[i*dimension+j]);
-	}
-	fclose(fout);
+  fout = fopen(("./out/matrixRl.txt" + version).c_str(), "r");
+  fscanf(fout, "%d%d", &relationTotal, &dimensionC);
+  for (int i = 0; i < relationTotal; i++) {
+    for (int j = 0; j < dimensionC; j++)
+      fscanf(fout, "%f", &matrixRelation[i * dimensionC + j]);
+  }
+  for (int i = 0; i < relationTotal; i++)
+    fscanf(fout, "%f", &matrixRelationPr[i]);
+  fclose(fout);
+
+  fout = fopen(("./out/matrixPosition.txt" + version).c_str(), "r");
+  fscanf(fout, "%d%d%d", &PositionTotalE1, &PositionTotalE2, &dimensionWPE);
+  for (int i = 0; i < PositionTotalE1; i++) {
+    for (int j = 0; j < dimensionWPE; j++)
+      fscanf(fout, "%f", &positionVecE1[i * dimensionWPE + j]);
+  }
+  for (int i = 0; i < PositionTotalE2; i++) {
+    for (int j = 0; j < dimensionWPE; j++)
+      fscanf(fout, "%f", &positionVecE2[i * dimensionWPE + j]);
+  }
+  fclose(fout);
+  cout << 71 << endl;
+
+  fout = fopen(("./out/word2vec.txt" + version).c_str(), "r");
+  fscanf(fout, "%d%d", &wordTotal, &dimension);
+  for (int i = 0; i < wordTotal; i++) {
+    for (int j = 0; j < dimension; j++)
+      fscanf(fout, "%f", &wordVec[i * dimension + j]);
+  }
+  fclose(fout);
 }
 
-int main()
-{
-	init();
-	preprocess();
-	test();
-	return 0;
+int main() {
+  init();
+  preprocess();
+  test();
+  return 0;
 }
